@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Shitbox Monitor</string>
+    <string name="widget_description">Battery, solar and signal at a glance.</string>
+</resources>
