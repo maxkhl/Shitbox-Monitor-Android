@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.shitbox.monitor.ui.Dashboard
+import com.shitbox.monitor.ui.WebDashboard
 import com.shitbox.monitor.ui.theme.ShitboxTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ShitboxTheme { Dashboard() }
+            ShitboxTheme { WebDashboard() }
         }
     }
 }
