@@ -17,10 +17,33 @@ android {
         versionName = "0.1.0"
     }
 
+    val keystorePath = System.getenv("SIGNING_KEYSTORE_PATH")
+    val keystorePassword = System.getenv("SIGNING_KEYSTORE_PASSWORD")
+    val keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+    val keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+    val hasReleaseSigning = !keystorePath.isNullOrBlank() &&
+        !keystorePassword.isNullOrBlank() &&
+        !keyAlias.isNullOrBlank() &&
+        !keyPassword.isNullOrBlank()
+
+    if (hasReleaseSigning) {
+        signingConfigs {
+            create("release") {
+                storeFile = file(keystorePath!!)
+                storePassword = keystorePassword
+                this.keyAlias = keyAlias
+                this.keyPassword = keyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
