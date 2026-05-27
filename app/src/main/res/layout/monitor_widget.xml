@@ -17,10 +17,7 @@
         android:textColor="@color/accent"
         android:fontFamily="monospace"
         android:maxLines="1"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="8sp"
-        android:autoSizeMaxTextSize="18sp"
-        android:autoSizeStepGranularity="1sp"/>
+        android:textSize="12sp"/>
 
     <TextView
         android:id="@+id/offline_text"
@@ -77,19 +74,14 @@
                 android:textColor="@color/muted"
                 android:fontFamily="monospace"
                 android:maxLines="1"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="6sp"
-                android:autoSizeMaxTextSize="18sp"
-                android:autoSizeStepGranularity="1sp"/>
+                android:textSize="10sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/solar_value"
                 android:layout_width="match_parent"
@@ -115,10 +107,7 @@
                 android:textColor="@color/muted"
                 android:fontFamily="monospace"
                 android:maxLines="1"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="6sp"
-                android:autoSizeMaxTextSize="18sp"
-                android:autoSizeStepGranularity="1sp"/>
+                android:textSize="10sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -126,78 +115,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingEnd="2dp">
-                    <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="4"/>
-                    <ImageView android:id="@+id/bar1" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:background="@color/border" android:contentDescription="@null"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingEnd="2dp">
-                    <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="3"/>
-                    <ImageView android:id="@+id/bar2" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="2" android:background="@color/border" android:contentDescription="@null"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingEnd="2dp">
-                    <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="2"/>
-                    <ImageView android:id="@+id/bar3" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="3" android:background="@color/border" android:contentDescription="@null"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingEnd="2dp">
-                    <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"/>
-                    <ImageView android:id="@+id/bar4" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="4" android:background="@color/border" android:contentDescription="@null"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    <ImageView android:id="@+id/bar5" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/border" android:contentDescription="@null"/>
-                </LinearLayout>
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/signal_value"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="start|center_vertical"
+                android:layout_weight="3"
+                android:gravity="start|bottom"
                 android:text="—"
-                android:textColor="@color/text"
+                android:textColor="@color/accent3"
                 android:fontFamily="monospace"
+                android:textStyle="bold"
                 android:maxLines="1"
                 android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="8sp"
-                android:autoSizeMaxTextSize="60sp"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeMaxTextSize="80sp"
                 android:autoSizeStepGranularity="1sp"/>
-
             <TextView
                 android:id="@+id/signal_label"
                 android:layout_width="match_parent"
@@ -208,10 +140,7 @@
                 android:textColor="@color/muted"
                 android:fontFamily="monospace"
                 android:maxLines="1"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="6sp"
-                android:autoSizeMaxTextSize="18sp"
-                android:autoSizeStepGranularity="1sp"/>
+                android:textSize="10sp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

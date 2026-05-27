@@ -13,7 +13,6 @@ import com.shitbox.monitor.R
 import com.shitbox.monitor.data.ApiClient
 import com.shitbox.monitor.data.DashboardSnapshot
 import com.shitbox.monitor.data.SettingsStore
-import com.shitbox.monitor.data.signalBars
 
 object MonitorWidget {
 
@@ -74,16 +73,8 @@ object MonitorWidget {
         val watts = s.solar?.solarPower
         views.setTextViewText(R.id.solar_value, watts?.toInt()?.let { "$it W" } ?: "—")
 
-        // SIGNAL bars
+        // SIGNAL
         val dbm = s.mobile?.signalDbm
-        val bars = signalBars(dbm)
-        val activeColor = ContextCompat.getColor(context, R.color.accent3)
-        val inactiveColor = ContextCompat.getColor(context, R.color.border)
-        val barIds = intArrayOf(R.id.bar1, R.id.bar2, R.id.bar3, R.id.bar4, R.id.bar5)
-        for ((i, id) in barIds.withIndex()) {
-            val on = (i + 1) <= bars
-            views.setInt(id, "setBackgroundColor", if (on) activeColor else inactiveColor)
-        }
         views.setTextViewText(R.id.signal_value, dbm?.toInt()?.let { "$it dBm" } ?: "—")
 
         return views
