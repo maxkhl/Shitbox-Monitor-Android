@@ -13,7 +13,7 @@ android {
         applicationId = "com.shitbox.monitor"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 1
         versionName = "0.1.0"
     }
 
