@@ -10,20 +10,20 @@
     <TextView
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:gravity="start|center_vertical"
         android:text="SHITBOX"
         android:textColor="@color/accent"
         android:fontFamily="monospace"
         android:maxLines="1"
-        android:textSize="12sp"/>
+        android:textSize="11sp"
+        android:layout_marginBottom="4dp"/>
 
     <TextView
         android:id="@+id/offline_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="OFFLINE"
         android:textColor="@color/warn"
@@ -40,7 +40,7 @@
         android:id="@+id/content_row"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:baselineAligned="false">
 
@@ -48,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/batt_value"
@@ -67,8 +68,7 @@
             <TextView
                 android:id="@+id/batt_label"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="start|top"
                 android:text="BATT"
                 android:textColor="@color/muted"
@@ -81,6 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/solar_value"
@@ -100,8 +101,7 @@
             <TextView
                 android:id="@+id/solar_label"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="start|top"
                 android:text="SOLAR"
                 android:textColor="@color/muted"
@@ -115,26 +115,69 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                <ImageView
+                    android:id="@+id/bar1"
+                    android:layout_width="4dp"
+                    android:layout_height="5dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@color/border"
+                    android:contentDescription="@null"/>
+                <ImageView
+                    android:id="@+id/bar2"
+                    android:layout_width="4dp"
+                    android:layout_height="8dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@color/border"
+                    android:contentDescription="@null"/>
+                <ImageView
+                    android:id="@+id/bar3"
+                    android:layout_width="4dp"
+                    android:layout_height="11dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@color/border"
+                    android:contentDescription="@null"/>
+                <ImageView
+                    android:id="@+id/bar4"
+                    android:layout_width="4dp"
+                    android:layout_height="14dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@color/border"
+                    android:contentDescription="@null"/>
+                <ImageView
+                    android:id="@+id/bar5"
+                    android:layout_width="4dp"
+                    android:layout_height="17dp"
+                    android:background="@color/border"
+                    android:contentDescription="@null"/>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/signal_value"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:gravity="start|bottom"
                 android:text="—"
-                android:textColor="@color/accent3"
+                android:textColor="@color/text"
                 android:fontFamily="monospace"
                 android:textStyle="bold"
                 android:maxLines="1"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMinTextSize="10sp"
-                android:autoSizeMaxTextSize="80sp"
+                android:autoSizeMaxTextSize="48sp"
                 android:autoSizeStepGranularity="1sp"/>
+
             <TextView
                 android:id="@+id/signal_label"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="start|top"
                 android:text="LTE"
                 android:textColor="@color/muted"
