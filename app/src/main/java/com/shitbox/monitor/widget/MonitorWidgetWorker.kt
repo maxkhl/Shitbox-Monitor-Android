@@ -1,7 +1,6 @@
 package com.shitbox.monitor.widget
 
 import android.content.Context
-import androidx.glance.appwidget.updateAll
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 
@@ -11,7 +10,7 @@ class MonitorWidgetWorker(
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         return try {
-            MonitorWidget().updateAll(applicationContext)
+            MonitorWidget.updateAll(applicationContext)
             Result.success()
         } catch (t: Throwable) {
             Result.retry()

@@ -1,250 +1,91 @@
 package com.shitbox.monitor.widget
 
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.glance.GlanceId
-import androidx.glance.GlanceModifier
-import androidx.glance.LocalContext
-import androidx.glance.LocalSize
-import androidx.glance.action.clickable
-import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.SizeMode
-import androidx.glance.appwidget.action.actionStartActivity
-import androidx.glance.appwidget.provideContent
-import androidx.glance.background
+import android.view.View
+import android.widget.RemoteViews
+import androidx.core.content.ContextCompat
 import com.shitbox.monitor.MainActivity
-import androidx.glance.layout.Alignment
-import androidx.glance.layout.Box
-import androidx.glance.layout.Column
-import androidx.glance.layout.Row
-import androidx.glance.layout.Spacer
-import androidx.glance.layout.fillMaxSize
-import androidx.glance.layout.fillMaxWidth
-import androidx.glance.layout.height
-import androidx.glance.layout.padding
-import androidx.glance.layout.width
-import androidx.glance.text.FontFamily
-import androidx.glance.text.FontWeight
-import androidx.glance.text.Text
-import androidx.glance.text.TextStyle
-import androidx.glance.unit.ColorProvider
+import com.shitbox.monitor.R
 import com.shitbox.monitor.data.ApiClient
 import com.shitbox.monitor.data.DashboardSnapshot
 import com.shitbox.monitor.data.SettingsStore
 import com.shitbox.monitor.data.signalBars
-import androidx.compose.ui.graphics.Color as ComposeColor
-import kotlin.math.max
-import kotlin.math.min
 
-private val Bg      = ComposeColor(0xFF0b0e13)
-private val Surface = ComposeColor(0xFF131820)
-private val Accent  = ComposeColor(0xFF00d4aa)
-private val Accent2 = ComposeColor(0xFFf0a500)
-private val Accent3 = ComposeColor(0xFF4ea3ff)
-private val Warn    = ComposeColor(0xFFff4d4d)
-private val Muted   = ComposeColor(0xFF4a5e72)
-private val TextMain = ComposeColor(0xFFd8e4f0)
-private val Border  = ComposeColor(0xFF1e2733)
+object MonitorWidget {
 
-class MonitorWidget : GlanceAppWidget() {
-    override val sizeMode: SizeMode = SizeMode.Responsive(
-        setOf(
-            DpSize(110.dp, 40.dp),
-            DpSize(180.dp, 70.dp),
-            DpSize(250.dp, 110.dp),
-            DpSize(320.dp, 150.dp),
-            DpSize(400.dp, 200.dp),
-            DpSize(500.dp, 280.dp),
-            DpSize(600.dp, 400.dp),
-        )
-    )
+    suspend fun updateAll(context: Context) {
+        val mgr = AppWidgetManager.getInstance(context)
+        val ids = mgr.getAppWidgetIds(ComponentName(context, MonitorWidgetReceiver::class.java))
+        if (ids.isEmpty()) return
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
         val settings = SettingsStore.load(context)
         val snapshot = try {
             DashboardSnapshot.from(ApiClient.fetchSnapshot(settings))
         } catch (t: Throwable) {
             null
         }
-        provideContent { WidgetContent(snapshot) }
+        val views = buildViews(context, snapshot)
+        for (id in ids) {
+            mgr.updateAppWidget(id, views)
+        }
     }
-}
 
-private data class WidgetScale(
-    val padding: Int,
-    val headerSp: Int,
-    val valueSp: Int,
-    val unitSp: Int,
-    val labelSp: Int,
-    val gapDp: Int,
-    val barWidth: Int,
-    val barUnit: Int,
-    val showHeader: Boolean,
-)
+    private fun buildViews(context: Context, s: DashboardSnapshot?): RemoteViews {
+        val views = RemoteViews(context.packageName, R.layout.monitor_widget)
 
-private fun scaleFor(size: DpSize): WidgetScale {
-    val w = size.width.value
-    val h = size.height.value
-    // Drive scale from the smaller dimension so the layout fits both axes.
-    val s = min(w / 250f, h / 110f).coerceIn(0.55f, 3.0f)
-    fun sz(base: Int) = max(1, (base * s).toInt())
-    return WidgetScale(
-        padding   = sz(12),
-        headerSp  = sz(11),
-        valueSp   = sz(24),
-        unitSp    = sz(14),
-        labelSp   = sz(10),
-        gapDp     = sz(12),
-        barWidth  = sz(4),
-        barUnit   = sz(3),
-        showHeader = h >= 90f,
-    )
-}
+        val openIntent = PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, MainActivity::class.java),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
+        views.setOnClickPendingIntent(R.id.widget_root, openIntent)
 
-@Composable
-private fun WidgetContent(s: DashboardSnapshot?) {
-    val context = LocalContext.current
-    val size = LocalSize.current
-    val scale = scaleFor(size)
-    val openApp = Intent(context, MainActivity::class.java)
-    Box(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .background(ColorProvider(Surface))
-            .clickable(actionStartActivity(openApp))
-            .padding(scale.padding.dp),
-    ) {
         if (s == null) {
-            Text(
-                "OFFLINE",
-                style = TextStyle(
-                    color = ColorProvider(Warn),
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = scale.valueSp.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
-            )
-            return@Box
+            views.setViewVisibility(R.id.offline_text, View.VISIBLE)
+            views.setViewVisibility(R.id.content_row, View.GONE)
+            return views
         }
 
-        Column(modifier = GlanceModifier.fillMaxSize()) {
-            if (scale.showHeader) {
-                Text(
-                    "SHITBOX",
-                    style = TextStyle(
-                        color = ColorProvider(Accent),
-                        fontFamily = FontFamily.Monospace,
-                        fontSize = scale.headerSp.sp,
-                    ),
-                )
-                Spacer(GlanceModifier.height((scale.padding / 2).dp))
-            }
+        views.setViewVisibility(R.id.offline_text, View.GONE)
+        views.setViewVisibility(R.id.content_row, View.VISIBLE)
 
-            Row(
-                modifier = GlanceModifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                SocBlock(s.battery?.soc, scale)
-                Spacer(GlanceModifier.width(scale.gapDp.dp))
-                SolarBlock(s.solar?.solarPower, scale)
-                Spacer(GlanceModifier.width(scale.gapDp.dp))
-                SignalBlock(s.mobile?.signalDbm, scale)
+        // BATT
+        val soc = s.battery?.soc
+        if (soc != null) {
+            val pct = soc.coerceIn(0.0, 100.0)
+            views.setTextViewText(R.id.batt_value, "${pct.toInt()}%")
+            val color = when {
+                pct < 20 -> ContextCompat.getColor(context, R.color.warn)
+                pct < 50 -> ContextCompat.getColor(context, R.color.accent2)
+                else     -> ContextCompat.getColor(context, R.color.accent)
             }
+            views.setTextColor(R.id.batt_value, color)
+        } else {
+            views.setTextViewText(R.id.batt_value, "—")
+            views.setTextColor(R.id.batt_value, ContextCompat.getColor(context, R.color.muted))
         }
-    }
-}
 
-@Composable
-private fun SocBlock(soc: Double?, scale: WidgetScale) {
-    val pct = (soc ?: 0.0).coerceIn(0.0, 100.0)
-    val color = when {
-        soc == null -> Muted
-        pct < 20    -> Warn
-        pct < 50    -> Accent2
-        else        -> Accent
-    }
-    Column {
-        Text(
-            text = if (soc == null) "—" else "${pct.toInt()}%",
-            style = TextStyle(
-                color = ColorProvider(color),
-                fontFamily = FontFamily.Monospace,
-                fontSize = scale.valueSp.sp,
-                fontWeight = FontWeight.Bold,
-            ),
-        )
-        Text(
-            "BATT",
-            style = TextStyle(
-                color = ColorProvider(Muted),
-                fontFamily = FontFamily.Monospace,
-                fontSize = scale.labelSp.sp,
-            ),
-        )
-    }
-}
+        // SOLAR
+        val watts = s.solar?.solarPower
+        views.setTextViewText(R.id.solar_value, watts?.toInt()?.let { "$it W" } ?: "—")
 
-@Composable
-private fun SolarBlock(watts: Double?, scale: WidgetScale) {
-    Column {
-        Text(
-            text = watts?.toInt()?.toString()?.plus(" W") ?: "—",
-            style = TextStyle(
-                color = ColorProvider(Accent2),
-                fontFamily = FontFamily.Monospace,
-                fontSize = scale.valueSp.sp,
-                fontWeight = FontWeight.Bold,
-            ),
-        )
-        Text(
-            "SOLAR",
-            style = TextStyle(
-                color = ColorProvider(Muted),
-                fontFamily = FontFamily.Monospace,
-                fontSize = scale.labelSp.sp,
-            ),
-        )
-    }
-}
-
-@Composable
-private fun SignalBlock(dbm: Double?, scale: WidgetScale) {
-    val bars = signalBars(dbm)
-    Column {
-        Row(verticalAlignment = Alignment.Bottom) {
-            for (i in 1..5) {
-                val on = i <= bars
-                val barColor = if (on) Accent3 else Border
-                val heightDp = (scale.barUnit + i * scale.barUnit).dp
-                Box(
-                    modifier = GlanceModifier
-                        .width(scale.barWidth.dp)
-                        .height(heightDp)
-                        .background(ColorProvider(barColor))
-                ) {}
-                if (i < 5) Spacer(GlanceModifier.width((scale.barUnit / 2).coerceAtLeast(1).dp))
-            }
+        // SIGNAL bars
+        val dbm = s.mobile?.signalDbm
+        val bars = signalBars(dbm)
+        val activeColor = ContextCompat.getColor(context, R.color.accent3)
+        val inactiveColor = ContextCompat.getColor(context, R.color.border)
+        val barIds = intArrayOf(R.id.bar1, R.id.bar2, R.id.bar3, R.id.bar4, R.id.bar5)
+        for ((i, id) in barIds.withIndex()) {
+            val on = (i + 1) <= bars
+            views.setInt(id, "setBackgroundColor", if (on) activeColor else inactiveColor)
         }
-        Spacer(GlanceModifier.height(2.dp))
-        Text(
-            text = dbm?.toInt()?.toString()?.plus(" dBm") ?: "—",
-            style = TextStyle(
-                color = ColorProvider(TextMain),
-                fontFamily = FontFamily.Monospace,
-                fontSize = scale.unitSp.sp,
-            ),
-        )
-        Text(
-            "LTE",
-            style = TextStyle(
-                color = ColorProvider(Muted),
-                fontFamily = FontFamily.Monospace,
-                fontSize = scale.labelSp.sp,
-            ),
-        )
+        views.setTextViewText(R.id.signal_value, dbm?.toInt()?.let { "$it dBm" } ?: "—")
+
+        return views
     }
 }
