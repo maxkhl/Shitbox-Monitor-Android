@@ -51,7 +51,17 @@ private val TextMain = ComposeColor(0xFFd8e4f0)
 private val Border  = ComposeColor(0xFF1e2733)
 
 class MonitorWidget : GlanceAppWidget() {
-    override val sizeMode: SizeMode = SizeMode.Exact
+    override val sizeMode: SizeMode = SizeMode.Responsive(
+        setOf(
+            DpSize(110.dp, 40.dp),
+            DpSize(180.dp, 70.dp),
+            DpSize(250.dp, 110.dp),
+            DpSize(320.dp, 150.dp),
+            DpSize(400.dp, 200.dp),
+            DpSize(500.dp, 280.dp),
+            DpSize(600.dp, 400.dp),
+        )
+    )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val settings = SettingsStore.load(context)
