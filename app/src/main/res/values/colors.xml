@@ -9,4 +9,5 @@
     <color name="warn">#ff4d4d</color>
     <color name="text">#d8e4f0</color>
     <color name="muted">#4a5e72</color>
+    <color name="widget_label">#8696a8</color>
 </resources>

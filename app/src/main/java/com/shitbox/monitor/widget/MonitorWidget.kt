@@ -67,7 +67,7 @@ object MonitorWidget {
             views.setTextColor(R.id.batt_value, color)
         } else {
             views.setTextViewText(R.id.batt_value, "—")
-            views.setTextColor(R.id.batt_value, ContextCompat.getColor(context, R.color.muted))
+            views.setTextColor(R.id.batt_value, ContextCompat.getColor(context, R.color.widget_label))
         }
 
         // SOLAR

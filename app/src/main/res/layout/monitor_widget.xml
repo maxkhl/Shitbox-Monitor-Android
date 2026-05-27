@@ -71,10 +71,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="start|top"
                 android:text="BATT"
-                android:textColor="@color/muted"
+                android:textColor="@color/widget_label"
                 android:fontFamily="monospace"
+                android:textStyle="bold"
                 android:maxLines="1"
-                android:textSize="10sp"/>
+                android:textSize="11sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -104,10 +105,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="start|top"
                 android:text="SOLAR"
-                android:textColor="@color/muted"
+                android:textColor="@color/widget_label"
                 android:fontFamily="monospace"
+                android:textStyle="bold"
                 android:maxLines="1"
-                android:textSize="10sp"/>
+                android:textSize="11sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -119,41 +121,42 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="4dp"
                 android:orientation="horizontal"
+                android:gravity="bottom"
                 android:baselineAligned="false">
                 <ImageView
                     android:id="@+id/bar1"
-                    android:layout_width="4dp"
-                    android:layout_height="5dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_width="5dp"
+                    android:layout_height="7dp"
+                    android:layout_marginEnd="3dp"
                     android:background="@color/border"
                     android:contentDescription="@null"/>
                 <ImageView
                     android:id="@+id/bar2"
-                    android:layout_width="4dp"
-                    android:layout_height="8dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_width="5dp"
+                    android:layout_height="11dp"
+                    android:layout_marginEnd="3dp"
                     android:background="@color/border"
                     android:contentDescription="@null"/>
                 <ImageView
                     android:id="@+id/bar3"
-                    android:layout_width="4dp"
-                    android:layout_height="11dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_width="5dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="3dp"
                     android:background="@color/border"
                     android:contentDescription="@null"/>
                 <ImageView
                     android:id="@+id/bar4"
-                    android:layout_width="4dp"
-                    android:layout_height="14dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_width="5dp"
+                    android:layout_height="19dp"
+                    android:layout_marginEnd="3dp"
                     android:background="@color/border"
                     android:contentDescription="@null"/>
                 <ImageView
                     android:id="@+id/bar5"
-                    android:layout_width="4dp"
-                    android:layout_height="17dp"
+                    android:layout_width="5dp"
+                    android:layout_height="23dp"
                     android:background="@color/border"
                     android:contentDescription="@null"/>
             </LinearLayout>
@@ -180,10 +183,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="start|top"
                 android:text="LTE"
-                android:textColor="@color/muted"
+                android:textColor="@color/widget_label"
                 android:fontFamily="monospace"
+                android:textStyle="bold"
                 android:maxLines="1"
-                android:textSize="10sp"/>
+                android:textSize="11sp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
