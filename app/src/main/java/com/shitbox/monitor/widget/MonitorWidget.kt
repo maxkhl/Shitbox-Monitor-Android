@@ -5,6 +5,9 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
@@ -77,14 +80,17 @@ object MonitorWidget {
         // SIGNAL
         val dbm = s.mobile?.signalDbm
         views.setTextViewText(R.id.signal_value, dbm?.toInt()?.let { "$it dBm" } ?: "—")
+
         val bars = signalBars(dbm)
         val activeColor = ContextCompat.getColor(context, R.color.accent3)
         val inactiveColor = ContextCompat.getColor(context, R.color.border)
-        val barIds = intArrayOf(R.id.bar1, R.id.bar2, R.id.bar3, R.id.bar4, R.id.bar5)
-        for ((i, id) in barIds.withIndex()) {
-            val on = (i + 1) <= bars
-            views.setInt(id, "setBackgroundColor", if (on) activeColor else inactiveColor)
+        val glyphs = "▁▂▃▄▅"
+        val spanned = SpannableString(glyphs)
+        for (i in glyphs.indices) {
+            val color = if ((i + 1) <= bars) activeColor else inactiveColor
+            spanned.setSpan(ForegroundColorSpan(color), i, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
+        views.setTextViewText(R.id.signal_bars, spanned)
 
         return views
     }

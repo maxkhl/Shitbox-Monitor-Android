@@ -118,54 +118,28 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:orientation="horizontal"
-                android:gravity="bottom"
-                android:baselineAligned="false">
-                <ImageView
-                    android:id="@+id/bar1"
-                    android:layout_width="5dp"
-                    android:layout_height="7dp"
-                    android:layout_marginEnd="3dp"
-                    android:background="@color/border"
-                    android:contentDescription="@null"/>
-                <ImageView
-                    android:id="@+id/bar2"
-                    android:layout_width="5dp"
-                    android:layout_height="11dp"
-                    android:layout_marginEnd="3dp"
-                    android:background="@color/border"
-                    android:contentDescription="@null"/>
-                <ImageView
-                    android:id="@+id/bar3"
-                    android:layout_width="5dp"
-                    android:layout_height="15dp"
-                    android:layout_marginEnd="3dp"
-                    android:background="@color/border"
-                    android:contentDescription="@null"/>
-                <ImageView
-                    android:id="@+id/bar4"
-                    android:layout_width="5dp"
-                    android:layout_height="19dp"
-                    android:layout_marginEnd="3dp"
-                    android:background="@color/border"
-                    android:contentDescription="@null"/>
-                <ImageView
-                    android:id="@+id/bar5"
-                    android:layout_width="5dp"
-                    android:layout_height="23dp"
-                    android:background="@color/border"
-                    android:contentDescription="@null"/>
-            </LinearLayout>
+            <TextView
+                android:id="@+id/signal_bars"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="start|bottom"
+                android:text="▁▂▃▄▅"
+                android:textColor="@color/border"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:includeFontPadding="false"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeMaxTextSize="120sp"
+                android:autoSizeStepGranularity="1sp"/>
 
             <TextView
                 android:id="@+id/signal_value"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="start|bottom"
                 android:text="—"
                 android:textColor="@color/text"
@@ -174,7 +148,7 @@
                 android:maxLines="1"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMinTextSize="10sp"
-                android:autoSizeMaxTextSize="48sp"
+                android:autoSizeMaxTextSize="64sp"
                 android:autoSizeStepGranularity="1sp"/>
 
             <TextView
