@@ -155,7 +155,7 @@ fun WebDashboard() {
                 server = SettingsStore.load(context)
                 scope.launch {
                     withContext(Dispatchers.IO) {
-                        runCatching { MonitorWidget().updateAll(context) }
+                        runCatching { MonitorWidget.updateAll(context) }
                     }
                 }
             },
