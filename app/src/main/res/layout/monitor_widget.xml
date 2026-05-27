@@ -141,7 +141,7 @@
                     android:orientation="vertical"
                     android:paddingEnd="2dp">
                     <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="4"/>
-                    <View android:id="@+id/bar1" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:background="@color/border"/>
+                    <ImageView android:id="@+id/bar1" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:background="@color/border" android:contentDescription="@null"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -151,7 +151,7 @@
                     android:orientation="vertical"
                     android:paddingEnd="2dp">
                     <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="3"/>
-                    <View android:id="@+id/bar2" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="2" android:background="@color/border"/>
+                    <ImageView android:id="@+id/bar2" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="2" android:background="@color/border" android:contentDescription="@null"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -161,7 +161,7 @@
                     android:orientation="vertical"
                     android:paddingEnd="2dp">
                     <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="2"/>
-                    <View android:id="@+id/bar3" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="3" android:background="@color/border"/>
+                    <ImageView android:id="@+id/bar3" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="3" android:background="@color/border" android:contentDescription="@null"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -171,7 +171,7 @@
                     android:orientation="vertical"
                     android:paddingEnd="2dp">
                     <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"/>
-                    <View android:id="@+id/bar4" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="4" android:background="@color/border"/>
+                    <ImageView android:id="@+id/bar4" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="4" android:background="@color/border" android:contentDescription="@null"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -179,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
-                    <View android:id="@+id/bar5" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/border"/>
+                    <ImageView android:id="@+id/bar5" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/border" android:contentDescription="@null"/>
                 </LinearLayout>
             </LinearLayout>
 
